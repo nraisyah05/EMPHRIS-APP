@@ -286,7 +286,7 @@ const Login = () => {
 
         {/* Footer */}
         <div className="bg-[#3aba42] p-2 text-white text-center text-[10px]">
-          © 2025 PT EMP. All rights reserved.
+          © 2025 PT EMP Energi Gandewa. All rights reserved.
         </div>
       </div>
     </div>
