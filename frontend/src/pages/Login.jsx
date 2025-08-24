@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import logo from '../assets/logo-emp.png';
-import videoBackground from '../assets/videobackground.mp4'; // import video
+import videoBackground from '../assets/videobackground.mp4';
 
 // Supabase config
 const supabaseUrl = 'https://iovcpjksvqxpuxhjtvbf.supabase.co';
@@ -114,8 +114,8 @@ const Login = () => {
 
     const isDevelopment = window.location.hostname === 'localhost';
     const redirectUrl = isDevelopment
-      ? 'http://localhost:5173/handle-redirect'
-      : 'https://emphris-app.vercel.app/';
+      ? `${window.location.origin}/handle-redirect` //localhost harus diperbaiki karena masih pakai localhost masing masing komputer
+      : 'https://emphris-app.vercel.app/handle-redirect';
 
     try {
       const { error } = await supabase.auth.signInWithOAuth({
@@ -286,7 +286,7 @@ const Login = () => {
 
         {/* Footer */}
         <div className="bg-[#3aba42] p-2 text-white text-center text-[10px]">
-          © 2025 PT EMP. All rights reserved.
+          © 2025 PT EMP Energi Gandewa. All rights reserved.
         </div>
       </div>
     </div>
