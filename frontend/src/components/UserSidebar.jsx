@@ -19,8 +19,8 @@ const UserSidebar = () => {
 
   return (
     <div className="w-64 bg-[#3aba42] text-white min-h-screen">
-      <div className="bg-white p-4 text-center">
-        <img src={empLogo} alt="EMP Logo" className="w-19 mx-auto" />
+      <div className="bg-white p-3 text-center">
+        <img src={empLogo} alt="EMP Logo" className="w-23.5 mx-auto" />
       </div>
       <div className="p-4">
         <ul className="list-none p-0 m-0">
@@ -57,13 +57,13 @@ const UserSidebar = () => {
             {openDokumen && (
               <ul className="list-none pl-8 mt-2">
                 <li className="mb-2">
-                  <Link to="/user-dashboard/dokumen/surat" className="block text-sm text-gray-200 hover:text-white">Surat</Link>
+                  <Link to="/user-dashboard/dokumen/surat" className="block text-sm text-white hover:text-green">Surat</Link>
                 </li>
                 <li className="mb-2">
-                  <Link to="/user-dashboard/dokumen/laporan" className="block text-sm text-gray-200 hover:text-white">Laporan</Link>
+                  <Link to="/user-dashboard/dokumen/laporan" className="block text-sm text-white hover:text-green">Laporan</Link>
                 </li>
                 <li className="mb-2">
-                  <Link to="/user-dashboard/dokumen/arsip" className="block text-sm text-gray-200 hover:text-white">Arsip</Link>
+                  <Link to="/user-dashboard/dokumen/arsip" className="block text-sm text-white hover:text-green">Arsip</Link>
                 </li>
               </ul>
             )}
