@@ -34,6 +34,21 @@ const Login = () => {
     loadSupabase();
   }, []);
 
+  // Function to get user role from the 'users' table
+  const getUserRole = async (userId) => {
+    const { data, error } = await supabase
+      .from('users') 
+      .select('role') 
+      .eq('user_id', userId)
+      .single();
+
+    if (error) {
+      console.error('Gagal mendapatkan role pengguna:', error.message);
+      return null;
+    }
+    return data.role;
+  };
+
   const handleEmailLogin = async (e) => {
     e.preventDefault();
     if (!supabase || loading) {
@@ -49,9 +64,23 @@ const Login = () => {
       });
 
       if (error) throw error;
-
-      console.log('Login berhasil:', data);
-      navigate('/user-dashboard');
+      
+      const userId = data.user.id;
+      const userRole = await getUserRole(userId);
+      
+      if (userRole) {
+        // Ganti 'hr' dan 'user' dengan nilai role yang sesuai di database Anda
+        if (userRole === 'hr') { 
+          navigate('/hr-dashboard');
+        } else if (userRole === 'user') { 
+          navigate('/user-dashboard');
+        } else {
+          // Pengalihan default untuk role lain
+          navigate('/default-dashboard');
+        }
+      } else {
+        setErrorMessage('Gagal mendapatkan role pengguna.');
+      }
     } catch (error) {
       console.error('Login gagal:', error.message);
       setErrorMessage(`Login gagal. Coba cek email/password Anda. Error: ${error.message}`);
@@ -66,11 +95,17 @@ const Login = () => {
       return;
     }
 
+    // Tentukan URL pengalihan secara dinamis
+    const isDevelopment = window.location.hostname === 'localhost';
+    const redirectUrl = isDevelopment 
+      ? 'http://localhost:5173/handle-redirect' // URL khusus untuk Vite
+      : 'https://emphris-app.vercel.app/'; // URL saat sudah deploy
+
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: 'https://nama-proyek-vercel.app/user-dashboard',
+          redirectTo: redirectUrl,
         },
       });
 

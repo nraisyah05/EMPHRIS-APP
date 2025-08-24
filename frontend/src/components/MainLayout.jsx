@@ -7,7 +7,7 @@ import HRSidebar from './HRSidebar';
 const MainLayout = ({ role, children }) => {
   return (
     <div className="flex min-h-screen bg-gray-100">
-      {role === 'hr' ? <HRSidebar /> : <UserSidebar />}
+      {role?.toLowerCase() === 'hr' ? <HRSidebar /> : <UserSidebar />}
       <div className="flex-1 flex flex-col">
         <Header />
         <main className="flex-1 p-6">
