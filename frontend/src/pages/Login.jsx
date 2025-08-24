@@ -6,7 +6,8 @@ import videoBackground from '../assets/videobackground.mp4'; // import video
 
 // Supabase config
 const supabaseUrl = 'https://iovcpjksvqxpuxhjtvbf.supabase.co';
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlvdmNwamtzdnF4cHV4aGp0dmJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU5MjAwNTgsImV4cCI6MjA3MTQ5NjA1OH0.axEZ-Len3kxhlTaCh9_06J4nr1HcESXFghxu-jesaEQ';
+const supabaseAnonKey =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlvdmNwamtzdnF4cHV4aGp0dmJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU5MjAwNTgsImV4cCI6MjA3MTQ5NjA1OH0.axEZ-Len3kxhlTaCh9_06J4nr1HcESXFghxu-jesaEQ';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ const Login = () => {
   }, []);
 
   // Function to get user role from the 'users' table
-  const getUserRole = async (userId) => {
+  const getUserRoleByUserId = async (userId) => {
     const { data, error } = await supabase
       .from('users')
       .select('role')
@@ -47,6 +48,30 @@ const Login = () => {
       return null;
     }
     return data.role;
+  };
+
+  const getUserRoleByEmail = async (email) => {
+    const { data, error } = await supabase
+      .from('users')
+      .select('role')
+      .eq('email', email)
+      .single();
+
+    if (error) {
+      console.error('Gagal mendapatkan role berdasarkan email:', error.message);
+      return null;
+    }
+    return data.role;
+  };
+
+  const redirectByRole = (role) => {
+    if (role === 'hr') {
+      navigate('/hr-dashboard');
+    } else if (role === 'user') {
+      navigate('/user-dashboard');
+    } else {
+      navigate('/default-dashboard');
+    }
   };
 
   const handleEmailLogin = async (e) => {
@@ -66,18 +91,10 @@ const Login = () => {
       if (error) throw error;
 
       const userId = data.user.id;
-      const userRole = await getUserRole(userId);
+      const userRole = await getUserRoleByUserId(userId);
 
       if (userRole) {
-        // Ganti 'hr' dan 'user' dengan nilai role yang sesuai di database Anda
-        if (userRole === 'hr') {
-          navigate('/hr-dashboard');
-        } else if (userRole === 'user') {
-          navigate('/user-dashboard');
-        } else {
-          // Pengalihan default untuk role lain
-          navigate('/default-dashboard');
-        }
+        redirectByRole(userRole);
       } else {
         setErrorMessage('Gagal mendapatkan role pengguna.');
       }
@@ -95,11 +112,10 @@ const Login = () => {
       return;
     }
 
-    // Tentukan URL pengalihan secara dinamis
     const isDevelopment = window.location.hostname === 'localhost';
     const redirectUrl = isDevelopment
-      ? 'http://localhost:5173/handle-redirect' // URL khusus untuk Vite
-      : 'https://emphris-app.vercel.app/'; // URL saat sudah deploy
+      ? 'http://localhost:5173/handle-redirect'
+      : 'https://emphris-app.vercel.app/';
 
     try {
       const { error } = await supabase.auth.signInWithOAuth({
@@ -116,6 +132,32 @@ const Login = () => {
       setErrorMessage(`Login Google gagal. Silakan coba lagi. Error: ${error.message}`);
     }
   };
+
+  // Listener untuk Google login selesai
+  useEffect(() => {
+    if (!supabase) return;
+
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        if (event === 'SIGNED_IN' && session) {
+          const user = session.user;
+          const userRole = await getUserRoleByEmail(user.email);
+
+          if (!userRole) {
+            setErrorMessage('Email Anda tidak terdaftar di sistem HR.');
+            await supabase.auth.signOut();
+            return;
+          }
+
+          redirectByRole(userRole);
+        }
+      }
+    );
+
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
+  }, [supabase]);
 
   const closeErrorBox = () => {
     setErrorMessage('');
@@ -134,7 +176,7 @@ const Login = () => {
         <source src={videoBackground} type="video/mp4" />
       </video>
 
-      {/* Overlay biar teks/form lebih jelas */}
+      {/* Overlay */}
       <div className="absolute inset-0 bg-black/40 -z-10"></div>
 
       {/* Card Login */}
@@ -229,8 +271,12 @@ const Login = () => {
               <strong>User Name</strong> menggunakan alamat email lengkap
             </p>
             <ul className="list-disc list-inside mt-1 ml-4 space-y-1">
-              <li>Contoh yang BENAR: <em>amirbudi@emp.com</em></li>
-              <li>Contoh yang SALAH: <em>amirbudi</em></li>
+              <li>
+                Contoh yang BENAR: <em>amirbudi@emp.com</em>
+              </li>
+              <li>
+                Contoh yang SALAH: <em>amirbudi</em>
+              </li>
             </ul>
             <p className="mt-2">
               <strong>Password</strong> menggunakan password email Anda
