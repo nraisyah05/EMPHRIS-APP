@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import logo from '../assets/logo-emp.png';
-import backgroundImage from '../assets/background.jpg';
+import videoBackground from '../assets/videobackground.mp4'; // import video
 
 // Supabase config
 const supabaseUrl = 'https://iovcpjksvqxpuxhjtvbf.supabase.co';
-const supabaseAnonKey ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlvdmNwamtzdnF4cHV4aGp0dmJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU5MjAwNTgsImV4cCI6MjA3MTQ5NjA1OH0.axEZ-Len3kxhlTaCh9_06J4nr1HcESXFghxu-jesaEQ';
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlvdmNwamtzdnF4cHV4aGp0dmJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU5MjAwNTgsImV4cCI6MjA3MTQ5NjA1OH0.axEZ-Len3kxhlTaCh9_06J4nr1HcESXFghxu-jesaEQ';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -37,8 +37,8 @@ const Login = () => {
   // Function to get user role from the 'users' table
   const getUserRole = async (userId) => {
     const { data, error } = await supabase
-      .from('users') 
-      .select('role') 
+      .from('users')
+      .select('role')
       .eq('user_id', userId)
       .single();
 
@@ -64,15 +64,15 @@ const Login = () => {
       });
 
       if (error) throw error;
-      
+
       const userId = data.user.id;
       const userRole = await getUserRole(userId);
-      
+
       if (userRole) {
         // Ganti 'hr' dan 'user' dengan nilai role yang sesuai di database Anda
-        if (userRole === 'hr') { 
+        if (userRole === 'hr') {
           navigate('/hr-dashboard');
-        } else if (userRole === 'user') { 
+        } else if (userRole === 'user') {
           navigate('/user-dashboard');
         } else {
           // Pengalihan default untuk role lain
@@ -97,7 +97,7 @@ const Login = () => {
 
     // Tentukan URL pengalihan secara dinamis
     const isDevelopment = window.location.hostname === 'localhost';
-    const redirectUrl = isDevelopment 
+    const redirectUrl = isDevelopment
       ? 'http://localhost:5173/handle-redirect' // URL khusus untuk Vite
       : 'https://emphris-app.vercel.app/'; // URL saat sudah deploy
 
@@ -122,10 +122,22 @@ const Login = () => {
   };
 
   return (
-    <div
-      className="flex items-center justify-center min-h-screen p-2 bg-cover bg-center font-sans text-sm"
-      style={{ backgroundImage: `url(${backgroundImage})` }}
-    >
+    <div className="relative flex items-center justify-center min-h-screen font-sans text-sm">
+      {/* Video background */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute top-0 left-0 w-full h-full object-cover -z-10"
+      >
+        <source src={videoBackground} type="video/mp4" />
+      </video>
+
+      {/* Overlay biar teks/form lebih jelas */}
+      <div className="absolute inset-0 bg-black/40 -z-10"></div>
+
+      {/* Card Login */}
       <div className="bg-white bg-opacity-95 rounded-lg shadow-xl w-full max-w-sm md:max-w-md overflow-hidden">
         {/* Header */}
         <div className="bg-[#3aba42] p-2 text-center text-white text-lg font-semibold">
@@ -217,8 +229,8 @@ const Login = () => {
               <strong>User Name</strong> menggunakan alamat email lengkap
             </p>
             <ul className="list-disc list-inside mt-1 ml-4 space-y-1">
-              <li>Contoh yang BENAR: <em>amir.budi@pelita-air.com</em></li>
-              <li>Contoh yang SALAH: <em>amir.budi</em></li>
+              <li>Contoh yang BENAR: <em>amirbudi@emp.com</em></li>
+              <li>Contoh yang SALAH: <em>amirbudi</em></li>
             </ul>
             <p className="mt-2">
               <strong>Password</strong> menggunakan password email Anda

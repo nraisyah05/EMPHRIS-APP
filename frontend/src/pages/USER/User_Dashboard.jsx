@@ -1,29 +1,39 @@
 import React from "react";
-import { FaClock, FaCalendarAlt, FaPlane, FaFileAlt, FaMoneyBill, FaUsers, FaUser } from "react-icons/fa";
+import {
+  FaClock,
+  FaCalendarAlt,
+  FaPlane,
+  FaFileAlt,
+  FaMoneyBill,
+  FaUsers,
+  FaUser,
+} from "react-icons/fa";
 
 const User_Dashboard = () => {
   const menuItems = [
-    { title: "Timesheet", icon: <FaClock size={40} />, color: "bg-info" },
-    { title: "Cuti", icon: <FaCalendarAlt size={40} />, color: "bg-success" },
-    { title: "Travel Request", icon: <FaPlane size={40} />, color: "bg-warning" },
-    { title: "Dokumen", icon: <FaFileAlt size={40} />, color: "bg-danger" },
-    { title: "Payslip", icon: <FaMoneyBill size={40} />, color: "bg-primary" },
-    { title: "Info (Struktur Organisasi)", icon: <FaUsers size={40} />, color: "bg-secondary" },
-    { title: "Personal Data", icon: <FaUser size={40} />, color: "bg-dark" },
+    { title: "Timesheet", icon: <FaClock size={50} />, color: "bg-info" },
+    { title: "Cuti", icon: <FaCalendarAlt size={50} />, color: "bg-success" },
+    { title: "Travel Request", icon: <FaPlane size={50} />, color: "bg-warning" },
+    { title: "Dokumen", icon: <FaFileAlt size={50} />, color: "bg-danger" },
+    { title: "Payslip", icon: <FaMoneyBill size={50} />, color: "bg-primary" },
+    { title: "Info (Struktur Organisasi)", icon: <FaUsers size={50} />, color: "bg-secondary" },
+    { title: "Personal Data", icon: <FaUser size={50} />, color: "bg-dark" },
   ];
 
   return (
-    <div className="container mt-4">
+    <div className="container mt-1">
+      <h3 className="mb-4">Dashboard User</h3>
       <div className="row">
         {menuItems.map((item, index) => (
-          <div className="col-md-4 mb-3" key={index}>
-            <div className={`card text-white ${item.color} shadow`}>
-              <div className="card-body text-center p-4">
+          <div className="col-md-4 mb-4" key={index}>
+            <div
+              className={`card text-white ${item.color} shadow h-100`}
+              style={{ minHeight: "220px", borderRadius: "5px" }}
+            >
+              <div className="card-body text-center p-4 d-flex flex-column justify-content-center align-items-center">
                 {item.icon}
-                <h5 className="card-title mt-3">{item.title}</h5>
-                <a href="#" className="btn btn-light btn-sm mt-3">
-                  Enter
-                </a>
+                <h6 className="card-title mt-3">{item.title}</h6>
+                <button className="btn btn-light btn-sm mt-3">Enter</button>
               </div>
             </div>
           </div>
