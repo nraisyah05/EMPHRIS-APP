@@ -40,7 +40,7 @@ const HRSidebar = () => {
           {/* Kelola Timesheet */}
           <li className="mb-4">
             <Link
-              to="/hr-dashboard/timesheet"
+              to="/hr-dashboard/timesheet/management"
               className="flex items-center text-white text-base p-2 rounded hover:bg-green-600"
             >
               <FaClock className="mr-3" /> Kelola Timesheet
