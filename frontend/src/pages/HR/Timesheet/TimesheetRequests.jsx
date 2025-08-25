@@ -148,7 +148,7 @@ const TimesheetRequests = () => {
   const [timesheetRequests] = useState([
     {
       id: 'ts-1',
-      full_name: 'John Doe',
+      full_name: 'John Deon',
       worker_no: 'EMP001',
       email: 'john.doe@company.com',
       company: 'PT EMP',
