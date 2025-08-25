@@ -24,6 +24,10 @@ function App() {
 
         {/* Jika belum terdaftar */}
         <Route path="/default-dashboard" element={<MainLayout><DefaultDashboard /></MainLayout>} />
+         <Route path="/user-dashboard/timesheet" element={<Timesheet />} />
+        
+       
+
       </Routes>
     </Router>
   );
