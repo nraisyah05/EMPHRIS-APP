@@ -14,7 +14,7 @@ const HRDashboard = () => {
   const navigate = useNavigate();
 
   const hrMenuItems = [
-    { title: "Kelola Timesheet", icon: <FaClock size={50} />, color: "bg-info", path: "/hr/timesheet" },
+    { title: "Kelola Timesheet", icon: <FaClock size={50} />, color: "bg-info", path: "/hr-dashboard/timesheet/management" },
     { title: "Kelola Cuti", icon: <FaFileAlt size={50} />, color: "bg-success", path: "/hr/cuti" },
     { title: "Kelola Travel Request", icon: <FaPlane size={50} />, color: "bg-warning", path: "/hr/travel-request" },
     { title: "Kelola Dokumen", icon: <FaFileAlt size={50} />, color: "bg-danger", path: "/hr/dokumen" },
