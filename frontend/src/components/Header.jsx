@@ -5,35 +5,33 @@ import { supabase } from '../supabaseClient';
 
 const Header = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser ] = useState(null);
   const navigate = useNavigate();
 
   // Ambil user dari Google Auth / Supabase Auth
   useEffect(() => {
-    const getUser = async () => {
+    const getUser  = async () => {
       try {
-        const { data: { user }, error } = await supabase.auth.getUser();
+        const { data: { user }, error } = await supabase.auth.getUser ();
         if (error) throw error;
 
         if (user) {
-          // Ambil detail tambahan dari tabel "profiles"
+          // Ambil detail tambahan dari tabel "users"
           const { data: profile, error: profileError } = await supabase
-            .from('users') // <-- ganti ke tabel yang bener
-            .select('role, full_name')
-            .eq('id', user.id) // pastikan kolom id di tabel users sama dengan auth.users.id
+            .from('users') // Menggunakan tabel users
+            .select('role, full_name') // Pastikan kolom ini ada di tabel users
+            .eq('user_id', user.id) // Pastikan kolom id di tabel users sama dengan auth.users.id
             .single();
 
           if (profileError && profileError.code !== 'PGRST116') {
-            // Kalau error selain "no rows found"
+            // Jika ada error selain "no rows found"
             console.error('Profile fetch error:', profileError);
           }
 
-          setUser({
+          setUser ({
             email: user.email,
             role: profile?.role || 'user',
-            fullname:
-              profile?.fullname ||
-              (user.email ? user.email.split('@')[0] : 'User'),
+            fullname: profile?.full_name || (user.email ? user.email.split('@')[0] : 'User '),
           });
         }
       } catch (err) {
@@ -41,12 +39,12 @@ const Header = () => {
       }
     };
 
-    getUser();
+    getUser ();
   }, []);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    setUser(null);
+    setUser (null);
     navigate('/');
   };
 
@@ -58,8 +56,7 @@ const Header = () => {
     }
   };
 
-  const displayName =
-    user?.fullname || (user?.email ? user.email.split('@')[0] : 'User');
+  const displayName = user?.fullname || (user?.email ? user.email.split('@')[0] : 'User ');
 
   return (
     <header className="bg-white p-4 flex justify-between items-center shadow-sm">

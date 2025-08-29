@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   FaClock,
   FaCalendarAlt,
@@ -9,15 +10,17 @@ import {
   FaUser,
 } from "react-icons/fa";
 
-const User_Dashboard = () => {
+const UserDashboard = () => {
+  const navigate = useNavigate();
+
   const menuItems = [
-    { title: "Timesheet", icon: <FaClock size={50} />, color: "bg-info" },
-    { title: "Cuti", icon: <FaCalendarAlt size={50} />, color: "bg-success" },
-    { title: "Travel Request", icon: <FaPlane size={50} />, color: "bg-warning" },
-    { title: "Dokumen", icon: <FaFileAlt size={50} />, color: "bg-danger" },
-    { title: "Payslip", icon: <FaMoneyBill size={50} />, color: "bg-primary" },
-    { title: "Info (Struktur Organisasi)", icon: <FaUsers size={50} />, color: "bg-secondary" },
-    { title: "Personal Data", icon: <FaUser size={50} />, color: "bg-dark" },
+    { title: "Timesheet", icon: <FaClock size={50} />, color: "bg-info", path: "/user-dashboard/timesheet" },
+    { title: "Cuti", icon: <FaCalendarAlt size={50} />, color: "bg-success", path: "/user-dashboard/cuti" },
+    { title: "Travel Request", icon: <FaPlane size={50} />, color: "bg-warning", path: "/user-dashboard/travel-request" },
+    { title: "Dokumen", icon: <FaFileAlt size={50} />, color: "bg-danger", path: "/user-dashboard/dokumen" },
+    { title: "Payslip", icon: <FaMoneyBill size={50} />, color: "bg-primary", path: "/user-dashboard/payslip" },
+    { title: "Info (Struktur Organisasi)", icon: <FaUsers size={50} />, color: "bg-secondary", path: "/user-dashboard/struktur-organisasi" },
+    { title: "Personal Data", icon: <FaUser size={50} />, color: "bg-dark", path: "/user-dashboard/personal-data" },
   ];
 
   return (
@@ -30,10 +33,15 @@ const User_Dashboard = () => {
               className={`card text-white ${item.color} shadow h-100`}
               style={{ minHeight: "220px", borderRadius: "5px" }}
             >
-              <div className="card-body text-center p-4 d-flex flex-column justify-content-center align-items-center">
+              <div className="card-body text-center p-5 d-flex flex-column justify-content-center align-items-center">
                 {item.icon}
-                <h6 className="card-title mt-3">{item.title}</h6>
-                <button className="btn btn-light btn-sm mt-3">Enter</button>
+                <h5 className="card-title mt-3">{item.title}</h5>
+                <button
+                  className="btn btn-light btn-sm mt-3"
+                  onClick={() => navigate(item.path)}
+                >
+                  Enter
+                </button>
               </div>
             </div>
           </div>
@@ -43,4 +51,4 @@ const User_Dashboard = () => {
   );
 };
 
-export default User_Dashboard;
+export default UserDashboard;
