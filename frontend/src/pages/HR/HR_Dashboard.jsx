@@ -14,12 +14,12 @@ const HRDashboard = () => {
   const navigate = useNavigate();
 
   const hrMenuItems = [
-    { title: "Kelola Timesheet", icon: <FaClock size={50} />, color: "bg-info", path: "/hr-dashboard/timesheet/management" },
-    { title: "Kelola Cuti", icon: <FaFileAlt size={50} />, color: "bg-success", path: "/hr/cuti" },
-    { title: "Kelola Travel Request", icon: <FaPlane size={50} />, color: "bg-warning", path: "/hr/travel-request" },
-    { title: "Kelola Dokumen", icon: <FaFileAlt size={50} />, color: "bg-danger", path: "/hr/dokumen" },
-    { title: "Kelola Payslip", icon: <FaMoneyBillWave size={50} />, color: "bg-primary", path: "/hr/payslip" },
-    { title: "Kelola Data Karyawan", icon: <FaUsers size={50} />, color: "bg-secondary", path: "/hr/karyawan" },
+    { title: "Kelola Timesheet", icon: <FaClock size={50} />, color: "bg-info", path: "/hr-dashboard/management" },
+    { title: "Kelola Cuti", icon: <FaFileAlt size={50} />, color: "bg-success", path: "/hr-dashboard/leave" },
+    { title: "Kelola Travel Request", icon: <FaPlane size={50} />, color: "bg-warning", path: "/hr-dashboard/travelrequest" },
+    { title: "Kelola Dokumen", icon: <FaFileAlt size={50} />, color: "bg-danger", path: "/hr-dashboard/document" },
+    { title: "Kelola Payslip", icon: <FaMoneyBillWave size={50} />, color: "bg-primary", path: "/hr-dashboard/payslip" },
+    { title: "Kelola Data Karyawan", icon: <FaUsers size={50} />, color: "bg-secondary", path: "/hr-dashboard/data-karyawan" },
     { title: "Struktur Organisasi", icon: <FaSitemap size={50} />, color: "bg-dark", path: "/hr/struktur" },
   ];
 

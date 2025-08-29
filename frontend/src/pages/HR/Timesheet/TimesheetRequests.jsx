@@ -252,15 +252,15 @@ const TimesheetRequests = () => {
     <div>
       <h2>Kelola Timesheet</h2>
       <TimesheetNav>
-        <NavLink to="/hr-dashboard/timesheet/management" className={location.pathname.endsWith('/hr-dashboard/timesheet/management') ? 'active' : ''}>
+        <NavLink to="/hr-dashboard/management" className={location.pathname.endsWith('/hr-dashboard/management') ? 'active' : ''}>
           Atur Jadwal Kerja
         </NavLink>
-        <NavLink to="/hr-dashboard/timesheet/requests" className={location.pathname.endsWith('/hr-dashboard/timesheet/requests') ? 'active' : ''}>
+        <NavLink to="/hr-dashboard/requests" className={location.pathname.endsWith('/hr-dashboard/requests') ? 'active' : ''}>
           Permintaan Masuk
         </NavLink>
       </TimesheetNav>
       
-      {location.pathname.endsWith('/hr-dashboard/timesheet/requests') ? (
+      {location.pathname.endsWith('/hr-dashboard/requests') ? (
         <Section>
           <CardList>
             {timesheetRequests.map((request) => (
@@ -274,13 +274,8 @@ const TimesheetRequests = () => {
                 </ProfileHeader>
                 <RequestDetails>
                   <DetailText><strong>Email:</strong> {request.email}</DetailText>
-                  <DetailText><strong>Company:</strong> {request.company}</DetailText>
                   <DetailText><strong>Jadwal Kerja:</strong> {request.working_schedule}</DetailText>
-                  <DetailText><strong>Tanggal:</strong> {request.entry_date}</DetailText>
-                  <DetailText><strong>Kategori:</strong> {request.working_category}</DetailText>
-                  <DetailText><strong>Jam Kerja:</strong> {request.hours_worked} jam</DetailText>
-                  <DetailText><strong>Catatan:</strong> {request.remarks}</DetailText>
-                  <DetailText><strong>Justifikasi:</strong> {request.justification}</DetailText>
+                  <DetailText><strong>Tanggal Diajukan:</strong> {request.entry_date}</DetailText>
                 </RequestDetails>
                 <ViewFullTimesheetButton onClick={() => handleViewFullTimesheet(request.worker_no)}>
                   Lihat Timesheet Lengkap
